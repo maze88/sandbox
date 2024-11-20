@@ -2,8 +2,8 @@ name: Sandbox
 
 on:
   push:
+    branches:
     tags:
-    - '*'
 
 jobs:
   test:
