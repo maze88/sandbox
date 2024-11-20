@@ -13,11 +13,11 @@ jobs:
     - uses: actions/checkout@v4
     - name: Determine base branch
       run: |
-        git_tag=${{ github.ref_name }}
-        echo $git_tag
-        # echo VERSION_WITHOUT_PREFIX=${git_tag:1} >> $GITHUB_ENV  # without the 'v' prefix
-
+        echo TEST1
+        git branch --contains ${{ github.ref_name }}
+        echo TEST2
         echo BASE_BRANCH=$(true) >> $GITHUB_ENV  # TODO: set branch based on tag trigger event parent branch
+        echo TEST3
     - name: Print base branch
       run: |
         echo $BASE_BRANCH
