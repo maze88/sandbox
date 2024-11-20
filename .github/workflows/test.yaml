@@ -3,7 +3,6 @@ name: Sandbox
 on:
   push:
     tags:
-    - "v*"
 
 jobs:
   test:
@@ -18,6 +17,6 @@ jobs:
         echo TEST2
         echo BASE_BRANCH=$(true) >> $GITHUB_ENV  # TODO: set branch based on tag trigger event parent branch
         echo TEST3
-    - name: Print base branch
+    - name: Display base branch
       run: |
         echo $BASE_BRANCH

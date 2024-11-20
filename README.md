@@ -1,1 +1,2 @@
-# Sandbox for testing GH actions stuff
+# Sandbox
+For testing various GitHub actions related things, etc.
