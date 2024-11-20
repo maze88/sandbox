@@ -11,6 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
+        depth: 2
         fetch-tags: true
     - name: Determine base branch
       run: |
