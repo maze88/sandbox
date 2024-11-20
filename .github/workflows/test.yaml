@@ -11,15 +11,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        fetch-depth: 2
         fetch-tags: true
+        ref: tags/${{ github.ref_name }}
     - name: Determine base branch
       run: |
         echo TEST1
         git branch --contains ${{ github.ref_name }}
         echo TEST2
-        echo BASE_BRANCH=$(true) >> $GITHUB_ENV  # TODO: set branch based on tag trigger event parent branch
+        git branch --contains tags/${{ github.ref_name }}
         echo TEST3
+        echo BASE_BRANCH=$(true) >> $GITHUB_ENV  # TODO: set branch based on tag trigger event parent branch
+        echo TEST4
     - name: Display base branch
       run: |
         echo $BASE_BRANCH
