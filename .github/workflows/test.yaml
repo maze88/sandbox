@@ -1,0 +1,23 @@
+name: Sandbox
+
+on:
+  push:
+    tags:
+    - "v*"
+
+jobs:
+  test:
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Determine base branch
+      run: |
+        git_tag=${{ github.ref_name }}
+        echo $git_tag
+        # echo VERSION_WITHOUT_PREFIX=${git_tag:1} >> $GITHUB_ENV  # without the 'v' prefix
+
+        echo BASE_BRANCH=$(true) >> $GITHUB_ENV  # TODO: set branch based on tag trigger event parent branch
+    - name: Print base branch
+      run: |
+        echo $BASE_BRANCH
