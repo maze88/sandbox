@@ -15,7 +15,6 @@ jobs:
       run: |
         git_tag=${{ github.ref_name }}
         echo $git_tag
-        # echo VERSION_WITHOUT_PREFIX=${git_tag:1} >> $GITHUB_ENV  # without the 'v' prefix
 
         echo BASE_BRANCH=$(true) >> $GITHUB_ENV  # TODO: set branch based on tag trigger event parent branch
     - name: Print base branch
