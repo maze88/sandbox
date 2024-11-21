@@ -16,17 +16,13 @@ jobs:
     - name: Determine base branch
       run: |
         if echo ${{ github.ref_name }} | grep beta; then
-          echo BASE_BRANCH1=$DEFAULT_BRANCH | tee -a $GITHUB_ENV
+          base_branch=$DEFAULT_BRANCH
         else
-          echo BASE_BRANCH1=${{ github.ref_name }} | tee -a $GITHUB_ENV
+          release_branch=$(echo ${{ github.ref_name }} | grep -Eo '^v[0-9]+\.[0-9]+')
+          base_branch=${release_branch}.x
         fi
-        # or:
-        echo BASE_BRANCH2=${{ contains(github.ref_name, 'beta') && env.DEFAULT_BRANCH || github.ref_name }} | tee -a $GITHUB_ENV
+        echo BASE_BRANCH=$base_branch | tee -a $GITHUB_ENV
     - name: Display base branch
       run: |
-        echo DEBUG
-        echo $BASE_BRANCH1
-        echo DEBUG
-        echo $BASE_BRANCH2
-        echo DEBUG
+        echo $BASE_BRANCH
 
