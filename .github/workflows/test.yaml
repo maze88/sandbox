@@ -13,16 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Determine base branch
-      run: |
-        if echo ${{ github.ref_name }} | grep beta; then
-          base_branch=$DEFAULT_BRANCH
-        else
-          release_branch=$(echo ${{ github.ref_name }} | grep -Eo '^v[0-9]+\.[0-9]+')
-          base_branch=${release_branch}.x
-        fi
-        echo BASE_BRANCH=$base_branch | tee -a $GITHUB_ENV
-    - name: Display base branch
-      run: |
-        echo $BASE_BRANCH
-
+    - run: |
+        echo DOCKER_TAG1=asdfasdf777          >> $GITHUB_ENV
+        echo DOCKER_TAG2=foo-bar-1.2.3        >> $GITHUB_ENV
+        echo DOCKER_TAG3=foo-bar-4.5.6-beta.9 >> $GITHUB_ENV
+    - run: |
+        echo test 1
+        echo resulting value is ${{ contains(env.DOCKER_TAG1, 'beta') && 'main' || env.DOCKER_TAG1 }}
+        echo test 2
+        echo resulting value is ${{ contains(env.DOCKER_TAG2, 'beta') && 'main' || env.DOCKER_TAG2 }}
+        echo test 3
+        echo resulting value is ${{ contains(env.DOCKER_TAG3, 'beta') && 'main' || env.DOCKER_TAG3 }}
