@@ -1,15 +1,19 @@
 name: Sandbox
 
+# on:
+#   push:
+#     branches:
+#     tags:
+
 on:
-  push:
-    branches:
-    tags:
+  workflow_call:
+    inputs:
+      gh_docs_token:
+        type: string
 
 jobs:
   sandbox:
     runs-on: ubuntu-latest
     steps:
     - run: |
-        which yq
-        yq --version
-        yq --help
+        echo ${{ inputs.gh_docs_token }}
