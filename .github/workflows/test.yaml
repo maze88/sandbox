@@ -1,19 +1,24 @@
 name: Sandbox
 
-# on:
-#   push:
-#     branches:
-#     tags:
-
 on:
-  workflow_call:
-    inputs:
-      gh_docs_token:
-        type: string
+  push:
+    branches:
+    - "main"
+    - "v*.x"
+    tags:
+    - "v*"
+
+env:
+  DEFAULT_BRANCH: main
 
 jobs:
-  sandbox:
+  docker-build-push:
     runs-on: ubuntu-latest
     steps:
-    - run: |
-        echo ${{ inputs.gh_docs_token }}
+    - uses: actions/checkout@v4
+    - name: Determine docker tags
+      run: |
+        git_sha=$(git rev-parse --short HEAD)                                   # short git commit hash
+        git_tag=${{ github.ref_type == 'tag' && github.ref_name || '' }}        # git tag, if triggered by tag event
+        latest=${{ github.ref_name  == env.DEFAULT_BRANCH && 'latest' || '' }}  # 'latest', if branch is master
+        echo DOCKER_TAGS=""$git_sha $git_tag $latest"" | tee -a $GITHUB_ENV
