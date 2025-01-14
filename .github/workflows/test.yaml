@@ -12,13 +12,16 @@ env:
   DEFAULT_BRANCH: main
 
 jobs:
-  docker-build-push:
+  sandbox:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Determine docker tags
+    - name: Determine base branch
       run: |
-        git_sha=$(git rev-parse --short HEAD)                                   # short git commit hash
-        git_tag=${{ github.ref_type == 'tag' && github.ref_name || '' }}        # git tag, if triggered by tag event
-        latest=${{ github.ref_name  == env.DEFAULT_BRANCH && 'latest' || '' }}  # 'latest', if branch is master
-        echo DOCKER_TAGS=""$git_sha $git_tag $latest"" | tee -a $GITHUB_ENV
+        if [[ "${{ github.ref_type }}" == "branch" || "${{ github.ref_name }}" == *"beta"* ]]; then  # branch commits and beta tags update values on network-operator's *master* branch
+          echo BASE_BRANCH=master | tee -a $GITHUB_ENV
+        else  # GA and `-rc.` tags update values on network-operator's respective *release* branches
+          release_branch=$(echo ${{ github.ref_name }} | sed -E 's/^network-operator-([0-9]+\.[0-9]+).+/v\1.x/')  # example: transforms "network-operator-25.1.0-beta.2" to "v25.1.x"
+          echo BASE_BRANCH=$release_branch | tee -a $GITHUB_ENV
+        fi
+
