@@ -2,20 +2,15 @@ name: Sandbox
 
 on:
   push:
-    branches:
-    - "main"
-    - "v*.x"
-    tags:
-    - "v*"
-
-env:
-  DEFAULT_BRANCH: main
 
 jobs:
   sandbox:
-    if: startsWith(github.event.head_commit.message, 'bar:')
     runs-on: ubuntu-latest
     steps:
-    # - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
     - run: |
-        echo yay
+        make success     2> >(tee error.log) || grep 'No such file' error.log
+    - run: |
+        make should-pass 2> >(tee error.log) || grep 'No such file' error.log
+    - run: |
+        make should-fail 2> >(tee error.log) || grep 'Unexpected error' error.log
