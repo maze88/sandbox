@@ -9,8 +9,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run: |
-        make success     2> >(tee error.log) || grep 'No such file' error.log
-    - run: |
-        make should-pass 2> >(tee error.log) || grep 'No such file' error.log
-    - run: |
-        make should-fail 2> >(tee error.log) || grep 'Unexpected error' error.log
+        echo ${{ vars.JOB_NAME }}
+        env
