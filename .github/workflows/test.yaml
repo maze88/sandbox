@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run: |
+    - id: foo
+      run: |
         echo ${{ vars.JOB_NAME }}
-        env
+        echo d=$(date) | tee -a $GITHUB_OUTPUT
+        echo u=$(whoami) >> $GITHUB_OUTPUT
+    outputs:
+      date: ${{ steps.foo.outputs.d }}
+      user: ${{ steps.foo.outputs.u }}
