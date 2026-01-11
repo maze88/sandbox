@@ -1,7 +1,8 @@
 trigger-on-tag:
   stage: deploy
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|v[0-9.]+\.x)$/'  # runs on master and release *branch* commits (since gitlab pull-*mirrors* cannot trigger tag pipelines)
+    # - if: '$CI_COMMIT_BRANCH =~ /^(main|v[0-9.]+\.x)$/'  # runs on master and release *branch* commits (since gitlab pull-*mirrors* cannot trigger tag pipelines)
+    - if: $CI_PIPELINE_SOURCE == "external"
   tags:
     - os/linux
     - type/docker
