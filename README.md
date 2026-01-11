@@ -1,3 +1,2 @@
 # Sandbox
-For testing various GitHub actions related things, etc. 
-Dynamic tags.
+For testing various GitHub actions related things, etc.
