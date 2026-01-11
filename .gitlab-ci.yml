@@ -1,0 +1,20 @@
+trigger-on-tag:
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^(main|v[0-9.]+\.x)$/'  # runs on master and release *branch* commits (since gitlab pull-*mirrors* cannot trigger tag pipelines)
+  tags:
+    - os/linux
+    - type/docker
+  image: alpine
+  # check if a git tag is associated with current commit
+  script:
+    - apk add --no-cache git
+    - git remote -v
+    - git fetch --tags upstream
+    - GIT_TAG=$(git describe --tags --exact-match HEAD || true)
+    - |
+      if [ -n "$GIT_TAG" ]; then
+        echo "Found tag: $GIT_TAG"
+      else
+        echo "No tag found for this commit. Exiting."
+      fi
