@@ -10,6 +10,8 @@ trigger-on-tag:
   script:
     - apk add --no-cache git
     - git remote -v
+    - git remote add upstream https://github.com/maze88/sandbox.git
+    - git remote -v
     - git fetch --tags upstream
     - GIT_TAG=$(git describe --tags --exact-match HEAD || true)
     - |
