@@ -2,13 +2,16 @@ trigger-on-tag:
   stage: deploy
   rules:
     # - if: '$CI_COMMIT_BRANCH =~ /^(main|v[0-9.]+\.x)$/'  # runs on master and release *branch* commits (since gitlab pull-*mirrors* cannot trigger tag pipelines)
-    - if: $CI_PIPELINE_SOURCE == "external"
+    - if: $CI_COMMIT_BRANCH
+    - if: $CI_COMMIT_TAG
   tags:
     - os/linux
     - type/docker
   image: alpine
   # check if a git tag is associated with current commit
   script:
+    - echo "DEBUG: CI_COMMIT_BRANCH is $CI_COMMIT_BRANCH"
+    - echo "DEBUG: CI_COMMIT_TAG is $CI_COMMIT_TAG"
     - apk add --no-cache git
     - git remote -v
     - git remote add upstream https://github.com/maze88/sandbox.git
