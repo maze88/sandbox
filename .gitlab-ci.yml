@@ -12,15 +12,3 @@ trigger-on-tag:
   script:
     - echo "CI_COMMIT_BRANCH is $CI_COMMIT_BRANCH"
     - echo "CI_COMMIT_TAG is $CI_COMMIT_TAG"
-    - apk add --no-cache git
-    - git remote -v
-    - git remote add upstream https://github.com/maze88/sandbox.git
-    - git remote -v
-    - git fetch --tags upstream
-    - GIT_TAG=$(git describe --tags --exact-match HEAD || true)
-    - |
-      if [ -n "$GIT_TAG" ]; then
-        echo "Found tag: $GIT_TAG"
-      else
-        echo "No tag found for this commit. Exiting."
-      fi
