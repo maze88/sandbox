@@ -4,23 +4,40 @@ on:
   push:
 
 jobs:
-  sandbox1:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - id: foo
-      run: |
-        echo ${{ vars.JOB_NAME }}
-        echo d=$(date) | tee -a $GITHUB_OUTPUT
-        echo u=$(whoami) >> $GITHUB_OUTPUT
-    outputs:
-      date: ${{ steps.foo.outputs.d }}
-      user: ${{ steps.foo.outputs.u }}
-
-  sandbox2:
-    needs: sandbox1
+  job1:
+    name: longjob
     runs-on: ubuntu-latest
     steps:
     - run: |
-        echo ${{ needs.sandbox1.outputs.date }}
-        echo ${{ needs.sandbox1.outputs.user }}
+        echo started
+        sleep 360
+        echo done
+
+  job2:
+    name: dependentjob
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo waiting for job1
+        echo started
+        sleep 360
+        echo done
+
+  job3:
+    name: quickjob
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo started
+        echo done
+
+  job4:
+    name: failer
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo started
+        exit 6
+        echo done
+
