@@ -1,4 +1,4 @@
-name: Sandbox
+name: leSandbox
 
 on:
   push:
@@ -32,12 +32,12 @@ jobs:
         echo started
         echo done
 
-  job4:
-    name: failer
-    runs-on: ubuntu-latest
-    steps:
-    - run: |
-        echo started
-        exit 6
-        echo done
+  # job4:
+  #   name: failer
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - run: |
+  #       echo started
+  #       exit 6
+  #       echo done
 
