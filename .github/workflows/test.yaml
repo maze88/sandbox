@@ -10,6 +10,7 @@ jobs:
     steps:
     - run: |
         echo started
+        exit 8
         sleep 60
         echo done
 
