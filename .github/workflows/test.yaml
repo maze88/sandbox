@@ -4,15 +4,14 @@ on:
   push:
 
 jobs:
-  # job1:
-  #   name: longjob
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - run: |
-  #       echo started
-  #       exit 8
-  #       sleep 60
-  #       echo done
+  job1:
+    name: longjob
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo started
+        sleep 80
+        echo done
 
   # job2:
   #   name: dependentjob
@@ -24,13 +23,13 @@ jobs:
   #       echo started
   #       echo done
 
-  job3:
-    name: quickjob
-    runs-on: ubuntu-latest
-    steps:
-    - run: |
-        echo started
-        echo done
+  # job3:
+  #   name: quickjob
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - run: |
+  #       echo started
+  #       echo done
 
   # job4:
   #   name: failer
