@@ -1,36 +1,36 @@
-#name: leSandbox
-#
-#on:
-#  push:
-#
-#jobs:
-#  job1:
-#    name: longjob
-#    runs-on: ubuntu-latest
-#    steps:
-#    - run: |
-#        echo started
-#        exit 8
-#        sleep 60
-#        echo done
-#
-#  job2:
-#    name: dependentjob
-#    needs: job1
-#    runs-on: ubuntu-latest
-#    steps:
-#    - run: |
-#        echo waiting for job1
-#        echo started
-#        echo done
-#
-#  job3:
-#    name: quickjob
-#    runs-on: ubuntu-latest
-#    steps:
-#    - run: |
-#        echo started
-#        echo done
+name: gh-test
+
+on:
+  push:
+
+jobs:
+  # job1:
+  #   name: longjob
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - run: |
+  #       echo started
+  #       exit 8
+  #       sleep 60
+  #       echo done
+
+  # job2:
+  #   name: dependentjob
+  #   needs: job1
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - run: |
+  #       echo waiting for job1
+  #       echo started
+  #       echo done
+
+  job3:
+    name: quickjob
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo started
+        echo done
 
   # job4:
   #   name: failer
